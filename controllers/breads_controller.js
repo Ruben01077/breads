@@ -2,10 +2,17 @@ const express = require("express");
 const breads = express.Router();
 const Bread = require("../models/breads")
 
-breads.get("/:Index", (req, res) =>{
-const arrayIndex = req.params.Index;
+breads.get("/", (req, res) =>{
 
-res.send(Bread[arrayIndex])
+    res.render("index",
+    
+    {
+        breads: Bread
+
+    }
+    
+    )
+
 
 })
 
