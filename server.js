@@ -7,6 +7,7 @@ app.set('views', __dirname + '/views')
 app.set('view engine', 'jsx')
 app.engine('jsx', require('express-react-views').createEngine())
 app.use(express.static('public'))
+app.use(express.urlencoded({extended: true}))
 
 
 
@@ -20,10 +21,18 @@ res.send("<h1>Welcome Awesome app about Breads</h1>")
 
 // Breads 
 
+
+
 const breadsController = require("./controllers/breads_controller")
 
 app.use("/breads", breadsController)
 
+
+
+
+
+
+  
 
 
 
