@@ -3,34 +3,46 @@ const breads = express.Router();
 const Bread = require("../models/breads")
 
 
-//New
+
+
+// INDEX
+breads.get('/', (req, res) => {
+  res.render('Index',
+    {
+      breads: Bread
+    }
+  )
+// res.send(Bread)
+})
+
+
+
+
+// New
 breads.get("/new", (req, res) => {
 
-res.render('new')
+  res.render('new')
 
 })
 
 // SHOW
 breads.get('/:arrayIndex', (req, res) => {
-  let index = req.params.arrayIndex;
-
-  if (Bread[index]) {
-    res.render('show', {
-
-      bread: Bread[index]
+  if (Bread[req.params.arrayIndex]) {
+    res.render('Show', {
+      bread:Bread[req.params.arrayIndex],
+      index: req.params.arrayIndex,
     })
   } else {
-
-    res.render("error_404")
-
+    res.render('404')
   }
 })
+
 
 
 // CREATE
 breads.post('/', (req, res) => {
   console.log(req.body)
-  if(req.body.hasGluten === 'on') {
+  if (req.body.hasGluten === 'on') {
     req.body.hasGluten = 'true'
   } else {
     req.body.hasGluten = 'false'
@@ -38,6 +50,14 @@ breads.post('/', (req, res) => {
   Bread.push(req.body)
   res.redirect('/breads')
 })
+
+
+// DELETE
+breads.delete('/:indexArray', (req, res) => {
+  Bread.splice(req.params.indexArray, 1)
+  res.status(303).redirect('/breads')
+})
+
 
 
 module.exports = breads;
